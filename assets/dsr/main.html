@@ -1,0 +1,172 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container-fluid">
+  <div class="row">
+  <div class="col">
+    <hr/>
+    <h1 class="text-center">Daily Status Report</h1>
+    <hr/>
+
+    <div class="input-group mb-3">
+      <label class="input-group-text">Mentor</label>
+      <input class="form-control" id="mentor" />
+    </div>
+    <div class="input-group mb-3">
+      <label class="input-group-text" value=0>Week</label>
+      <input class="form-control" type="number" id="week"/>
+    </div>
+
+    <div class="input-group mb-3">
+      <label class="input-group-text">Date</label>
+      <input class="form-control" type="date" id="date"/>
+    </div>
+
+    
+    <div class="mb-3" id="work">
+      <h2 class="text-center">
+        Describe Works
+        <button class="btn btn-secondary" id="work-btn">+</button>
+      </h2>
+    </div>
+
+    <h2 class="text-center">References</h2>
+    <div class="input-group">
+      <textarea class="form-control" placeholder="[Descrition](Link)"></textarea>
+    </div>
+
+    <div class="mb-3" id="chal">
+      <h2 class="text-center">
+        Challenges
+        <button class="btn btn-secondary bg-primary" id="chal-btn">+</button>
+      </h2>
+    </div>
+
+    <h2 class="text-center">Resolution of Challenges</h2>
+    <div class="input-group">
+      <textarea class="form-control" placeholder="Resolution of Challenges" id="res_chal"></textarea>
+    </div>
+
+    <h2 class="text-center">Code Commit Link</h2>
+    <div class="input-group">
+      <textarea class="form-control" placeholder="Commit Links" id="ccl"></textarea>
+    </div>
+
+    <h2 class="text-center">Next's Day Plan</h2>
+    <div class="input-group">
+      <textarea class="form-control" placeholder="Next Day Plan" id="ndp"></textarea>
+    </div>
+
+    <button class="btn btn-primary" id="submit">Submit</button>
+
+  </div>
+
+  <iframe id="pdf" class="col">
+  </iframe>
+</div>
+  </div>
+  <script defer>
+    
+    let inp_ele = `
+      <div class="input-group mb-3">
+        <div class="input-group-text">
+          <input type="checkbox" class="form-check-input mt-0">
+        </div>
+        <textarea class="form-control" placeholder="Describe Work"></textarea>
+        <button class="btn btn-secondary" >-</button>
+      </div>
+    `
+
+    let chal_ele = `
+      <div class="input-group mb-3">
+        <div class="input-group-text">
+          <input type="checkbox" class="form-check-input mt-0">
+        </div>
+        <textarea class="form-control" placeholder="Describe Challenges"></textarea>
+        <button class="btn btn-secondary" >-</button>
+      </div>
+    `
+
+    let work =  document.querySelector("#work")
+    let workbtn =  document.querySelector("#work-btn")
+    workbtn.addEventListener("click", (e)=>{
+
+      let div = document.createElement("div")
+      div.innerHTML = inp_ele
+      div.querySelector("button").addEventListener("click", (k)=>{
+        work.removeChild(div)
+      })
+      work.appendChild(div)
+
+    })
+
+    let chal =  document.querySelector("#chal")
+    let chalbtn =  document.querySelector("#chal-btn")
+    chalbtn.addEventListener("click", (e)=>{
+
+      let div = document.createElement("div")
+      div.innerHTML = chal_ele
+      div.querySelector("button").addEventListener("click", (k)=>{
+        chal.removeChild(div)
+      })
+      chal.appendChild(div)
+
+    })
+
+
+    
+    document.querySelector("#submit").addEventListener("click", e => {
+      let work_in_progress = []
+      let work_done = []
+      let inps = document.querySelector("#work").querySelectorAll("input")
+      let ta = document.querySelector("#work").querySelectorAll("textarea")
+      for(let i = 0; i < ta.length; i++){
+        if (inps[i].checked) {
+          work_done.push(ta[i].value)
+        }else{
+          work_in_progress.push(ta[i].value)
+        }
+      }
+      let res_chal = []
+      let unres_chal = []
+      inps = document.querySelector("#chal").querySelectorAll("input")
+      ta = document.querySelector("#chal").querySelectorAll("textarea")
+      for(let i = 0; i < ta.length; i++){
+        if (inps[i].checked) {
+          res_chal.push(ta[i].value)
+        }else{
+          unres_chal.push(ta[i].value)
+        }
+      }
+      fetch("/dsr", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          mentor: document.querySelector("#mentor").value,
+          week: document.querySelector("#week").value,
+          date: document.querySelector("#date").value,
+          res_chal: document.querySelector("#res_chal").value,
+          ccl: document.querySelector("#ccl").value,
+          ndp: document.querySelector("#ndp").value,
+          work_done: work_done,
+          work_in_progress: work_in_progress,
+          res_chal: res_chal,
+          unres_chal: unres_chal
+        })
+      }).then(res => {
+        res.blob().then(k => {
+          url = URL.createObjectURL(k)
+          document.querySelector("#pdf").src = url
+        })
+      })
+    })
+  </script>
+</body>
+</html>
+

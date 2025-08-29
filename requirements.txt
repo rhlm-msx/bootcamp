@@ -1,0 +1,3 @@
+mangum
+fastapi[standard]
+boto3
