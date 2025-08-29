@@ -21,6 +21,8 @@ AWS_REGION          = os.environ.get("AWS_REGION", None)
 AWS_OUT_FORMAT      = os.environ.get("AWS_OUT_FORMAT", None)
 ENDPOINT            = os.environ.get("ENDPOINT", None)
 
+print(f"{AWS_ACCESS_KEY_ID=}, {AWS_SECRET_KEY=}, {AWS_REGION=}")
+
 
 #s3_conf = S3Config(region_name=AWS_REGION)
 #
