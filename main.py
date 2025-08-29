@@ -17,24 +17,19 @@ import uvicorn
 
 AWS_ACCESS_KEY_ID   = os.environ.get("AWS_ACCESS_KEY_ID", None)
 AWS_SECRET_KEY      = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
-AWS_REGION          = os.environ.get("AWS_REGION", None)
-AWS_OUT_FORMAT      = os.environ.get("AWS_OUT_FORMAT", None)
+AWS_REGION          = os.environ.get("AWS_REGION", "ap-south-1")
+AWS_OUT_FORMAT      = os.environ.get("AWS_OUT_FORMAT", "json")
 ENDPOINT            = os.environ.get("ENDPOINT", None)
+BUCKET_NAME         = os.environ.get("BUCKET_NAME", None)
 
-print(f"{AWS_ACCESS_KEY_ID=}, {AWS_SECRET_KEY=}, {AWS_REGION=}")
-
-
-#s3_conf = S3Config(region_name=AWS_REGION)
-#
-#s3_client = boto3.client("s3", endpoint_url=ENDPOINT, aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_KEY)
-#
-#BUCKET_NAME = "locals3"
-#
-#
-#try:
-#    res = s3_client.head_bucket(Bucket=BUCKET_NAME)
-#except:
-#    BUCKET_NAME = None
+assert AWS_ACCESS_KEY_ID != None, "AWS Credential Not Setup"
+s3_conf = S3Config(region_name=AWS_REGION)
+s3_client = boto3.client("s3", endpoint_url=ENDPOINT, aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_KEY)
+try:
+    res = s3_client.head_bucket(Bucket=BUCKET_NAME)
+except Exception as e:
+    print(f"[ERROR]: Bucket {BUCKET_NAME}, is not setup, count or couldnt not connect, {e}")
+    exit(-1)
 
 
 
