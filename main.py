@@ -34,15 +34,15 @@ except Exception as e:
 
 
 
-products = pd.read_csv("dataset/products.csv")
+products = pd.read_csv("assets/dataset/products.csv")
 products = products.set_index("id")
 products["price"] = products["price"].map(lambda x: float(x[1:]))
 main = FastAPI()
 main.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=False, allow_methods=["*"], allow_headers=["*"])
 
-dsr_html = open("dsr/main.html").read()
-main_html = open("main.html").read()
-doorchart_html = open("products/index.html").read()
+dsr_html = open("assets/dsr/main.html").read()
+main_html = open("assets/main.html").read()
+doorchart_html = open("assets/products/index.html").read()
 
 
 @cache
