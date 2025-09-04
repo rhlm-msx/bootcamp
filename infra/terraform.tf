@@ -16,7 +16,6 @@ provider "aws" {
 
 
 resource "aws_s3_bucket" "buck"{
-	bucket = "locals3"
 }
 
 output "buck_name_log" {

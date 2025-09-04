@@ -1,3 +1,4 @@
 mangum
 fastapi[standard]
 boto3
+pywal

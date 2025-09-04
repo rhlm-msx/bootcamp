@@ -1,4 +1,10 @@
 
+resource "aws_lambda_layer_version" "depend" {
+  filename   = "layer.zip"
+  layer_name = "depend"
+
+  compatible_runtimes = ["python3.12"]
+}
 
 resource "aws_lambda_function" "test_tf" {
 
@@ -6,7 +12,9 @@ resource "aws_lambda_function" "test_tf" {
   filename      = data.archive_file.code_repo.output_path
   runtime       = "python3.12"
   role          = resource.aws_iam_role.role.arn
-  handler       = "app.handler"
+  handler       = "entry.handler"
+
+  layers = [ aws_lambda_layer_version.depend.arn ]
 
   source_code_hash = md5(filebase64(data.archive_file.code_repo.output_path))
 
