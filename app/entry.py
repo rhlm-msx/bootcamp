@@ -1,3 +1,10 @@
+import os
+import sys
+
+if os.environ.get("ENV", None) == "aws" :
+    sys.path.append("/opt")
+    
+
 from fastapi import FastAPI, Response
 from fastapi.responses import PlainTextResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
