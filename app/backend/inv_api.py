@@ -3,6 +3,7 @@ import json
 from fastapi.responses import HTMLResponse, Response
 from fastapi import APIRouter, HTTPException
 from backend.cdn import Assets
+from backend.asset_api import buck
 
 
 '''
@@ -13,7 +14,6 @@ inventory/id/{id}
 '''
 
 inv_router = APIRouter(prefix="/inventory")
-buck = Assets("locals3")
 data = buck.fetchContent("dataset_products.json")
 data = json.loads(data)
 import pandas as pd
