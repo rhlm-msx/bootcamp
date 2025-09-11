@@ -1,0 +1,15 @@
+{
+  "id": 4,
+  "category": "Electronics",
+  "subcategory": "Selfie Accessories",
+  "description_expanded": "onn. Wireless Selfie Stick with Bluetooth Remote is designed to deliver everyday reliability with thoughtful details suited for electronics. Bluetooth-enabled selfie stick with an adjustable smartphone cradle, GoPro mount, and a wireless remote shutter. Extends to capture wider group photos and videos. Built for convenience and value, it balances quality materials with practical features you can rely on at home, on the go, or as a thoughtful gift.",
+  "specifications": {
+    "product_type": "Selfie Stick",
+    "connectivity": "Bluetooth",
+    "compatibility": "Smartphones, GoPro mount",
+    "features": [
+      "wireless",
+      "remote"
+    ]
+  }
+}

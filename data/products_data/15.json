@@ -1,0 +1,14 @@
+{
+  "id": 15,
+  "category": "Personal Care",
+  "subcategory": "Hair Dryers",
+  "description_expanded": "SKIMI Ionic Hair Dryer with Diffuser is designed to deliver everyday reliability with thoughtful details suited for personal care. A high-speed, lightweight ionic hair dryer with a concentrator and diffuser attachment. Features a powerful motor for fast drying and reduced frizz, suitable for home and travel. Built for convenience and value, it balances quality materials with practical features you can rely on at home, on the go, or as a thoughtful gift.",
+  "specifications": {
+    "product_type": "Ionic Hair Dryer",
+    "format": "Travel size",
+    "features": [
+      "diffuser",
+      "frizz"
+    ]
+  }
+}

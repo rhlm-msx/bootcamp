@@ -1,0 +1,15 @@
+{
+  "id": 23,
+  "category": "Electronics",
+  "subcategory": "Bluetooth Speakers",
+  "description_expanded": "JBL Clip 5 Ultra-Portable Waterproof Bluetooth Speaker (Black) is designed to deliver everyday reliability with thoughtful details suited for electronics. A compact, ultra-portable Bluetooth speaker with a carabiner for easy clipping to bags or belts. Features JBL Pro Sound and is fully waterproof. Built for convenience and value, it balances quality materials with practical features you can rely on at home, on the go, or as a thoughtful gift.",
+  "specifications": {
+    "product_type": "Bluetooth Speaker",
+    "connectivity": "Bluetooth",
+    "features": [
+      "waterproof",
+      "portable",
+      "carabiner"
+    ]
+  }
+}
