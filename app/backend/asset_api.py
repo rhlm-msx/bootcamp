@@ -1,9 +1,10 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse,Response
 from backend.cdn import Assets
+from backend.creds import MAIN_BUCKET_NAME
 
 asset_router = APIRouter(prefix="/assets")
-buck = Assets("locals3")
+buck = Assets(MAIN_BUCKET_NAME)
 
 @asset_router.get("/image/{pid}", response_class=Response)
 async def fetchImage(pid: int):

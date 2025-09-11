@@ -9,8 +9,8 @@ from tqdm import tqdm
 
 
 
-bucketname = "locals3"
-s3 = boto3.resource("s3", endpoint_url="http://localhost:4566")
+bucketname = "terraform-20250911100819230800000001"
+s3 = boto3.resource("s3", endpoint_url=None)
 cli = s3.Bucket(bucketname)
 
 logs = {}
@@ -48,7 +48,7 @@ for p, s, files in os.walk("assets"):
         with open(path, "rb") as file:
             h = md5(file.read()).hexdigest()
             oh = logs.get(key, "")
-            if h != oh:
+            if h != oh and key in existing_keys:
                 existing_keys.remove(key)
                 logs[key] = h
 
