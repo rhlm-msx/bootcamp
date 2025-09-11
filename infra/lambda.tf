@@ -16,6 +16,15 @@ resource "aws_lambda_function" "test_tf" {
 
   layers = [ aws_lambda_layer_version.depend.arn ]
 
+  environment {
+	variables = {
+		BUCKET_NAME = aws_s3_bucket.bucket.bucket
+		STAGE = "dev"
+		ENV = "aws"
+	}
+
+  }
+
   source_code_hash = md5(filebase64(data.archive_file.code_repo.output_path))
 
 }
