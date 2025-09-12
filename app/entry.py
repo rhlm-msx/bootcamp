@@ -47,4 +47,16 @@ app.include_router(dsr_router)
 app.include_router(format_router)
 
 
-handler = Mangum(app)
+mangumHandler = Mangum(app)
+
+
+urlfix = lambda pattern,path: path if pattern not in path or pattern.endswith("/") else (path + "/")
+def fixdict(dt, key):
+    dt[key] = urlfix("app", dt[key])
+    return dt[key]
+
+def handler(event, context):
+    print(fixdict(event, "path"))
+    print(fixdict(event, "resource"))
+    print(fixdict(event["requestContext"], "resourcePath"))
+    return mangumHandler(event, context)

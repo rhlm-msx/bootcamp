@@ -24,7 +24,7 @@ card.innerHTML = `
     <div class="fw-bolder card-header text-bg-danger text-center" style="background-color: ${col} !important">
     ${obj.status}
     </div>
-    <img class="card-img-top w-100 justify-content-center align-items-center d-flex" src="http://localhost:8000/assets/image/${obj.id}">
+    <img class="card-img-top w-100 justify-content-center align-items-center d-flex" src="/assets/image/${obj.id}">
     <div class="card-body">
         <h4 class="card-title lh-1">
         ${obj.name}
@@ -42,7 +42,7 @@ card.innerHTML = `
 `
 root.appendChild(card)
 card.querySelector("img").onload = (e)=>{
-fetch("http://localhost:8000/utils/colors/" + obj.id).then(res => {
+fetch("/utils/colors/" + obj.id).then(res => {
 
    res.json().then(res => {
     let color1 = res["colors"]["color2"];
@@ -57,7 +57,7 @@ fetch("http://localhost:8000/utils/colors/" + obj.id).then(res => {
 entity_cards.push(card)
 }
 
-fetch("http://localhost:8000/inventory/listing").then(res => {
+fetch("/inventory/listing").then(res => {
     res.json().then(res =>{
         res.forEach(data => {
             addEntity(data)

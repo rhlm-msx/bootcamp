@@ -1,5 +1,7 @@
 import pytest
+import json
 from entry import handler
+from http import HTTPStatus
 
 
 class Context:
@@ -47,7 +49,6 @@ def make_event():
       "userAgent": "PostmanRuntime/7.26.8",
       "user": None
     },
-    "path": path,
     "accountId": "123456789012",
     "protocol": "HTTP/1.1",
     "apiId": "abcdefg"
@@ -81,14 +82,31 @@ def make_event():
 
 def test_root(make_event, context):
     event = make_event("GET", "/")
-    print(handler)
     res = handler(event, context)
-    assert res["statusCode"] == 307
+    assert res["statusCode"] == HTTPStatus.TEMPORARY_REDIRECT.value
 
 
 def test_app(make_event, context):
     event = make_event("GET", "/app")
     res = handler(event, context)
+    assert res["statusCode"] == HTTPStatus.OK.value
+
+def test_app2(make_event, context):
+    event = make_event("GET", "/app/")
+    res = handler(event, context)
+    assert res["statusCode"] == HTTPStatus.OK.value
+
+
+def test_not_exist(make_event, context):
+    event = make_event("GET", "/canyoufindthewaldoalongwithshaktimaan")
+    res = handler(event, context)
+    assert res["statusCode"] == HTTPStatus.NOT_FOUND.value
+
+def test_summary(make_event, context):
+    event = make_event("GET", "/inventory/summary")
+    res = handler(event, context)
     print(res)
-    assert res["statusCode"] == 200
+    assert res["statusCode"] == HTTPStatus.OK.value
+    assert res["headers"]["content-type"] == "application/json"
+    assert json.loads(res["body"])["entity_count"] >= 0
 

@@ -70,7 +70,7 @@ document.querySelector("#submit").addEventListener("click", e => {
         unres_chal.push(ta[i].value)
     }
     }
-    fetch("http://localhost:8000/dsr", {
+    fetch("/dsr", {
     method: "POST",
     headers: {
         'Content-Type': 'application/json'
