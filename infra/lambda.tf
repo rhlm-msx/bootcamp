@@ -1,11 +1,19 @@
 
-resource "aws_lambda_layer_version" "depend" {
-  filename   = "layer.zip"
-  layer_name = "depend"
+resource "aws_lambda_layer_version" "depend1" {
+  filename   = "layer1.zip"
+  layer_name = "depend1"
 
   compatible_runtimes = ["python3.12"]
+  source_code_hash = md5(filebase64(data.archive_file.layer_repo1.output_path))
 }
 
+resource "aws_lambda_layer_version" "depend2" {
+  filename   = "layer2.zip"
+  layer_name = "depend2"
+
+  compatible_runtimes = ["python3.12"]
+  source_code_hash = md5(filebase64(data.archive_file.layer_repo2.output_path))
+}
 resource "aws_lambda_function" "test_tf" {
 
   function_name = "test_tf"
@@ -14,7 +22,7 @@ resource "aws_lambda_function" "test_tf" {
   role          = resource.aws_iam_role.role.arn
   handler       = "entry.handler"
 
-  layers = [ aws_lambda_layer_version.depend.arn ]
+  layers = [ aws_lambda_layer_version.depend1.arn,  aws_lambda_layer_version.depend2.arn  ]
 
   environment {
 	variables = {
