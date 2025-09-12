@@ -1,9 +1,8 @@
 import os
 import sys
+import asyncio
 
-if os.environ.get("ENV", None) == "aws" :
-    sys.path.append("/opt")
-    
+os.environ["HOME"] = os.environ.get("HOME", "/home")
 
 from fastapi import FastAPI, Response
 from fastapi.responses import PlainTextResponse, JSONResponse, RedirectResponse
@@ -18,6 +17,14 @@ from backend.asset_api import asset_router
 from backend.util_api import utils_router
 from backend.dsr_api import dsr_router
 from backend.format_api import format_router
+
+
+
+try:
+    asyncio.get_running_loop()
+except RuntimeError:
+    asyncio.set_event_loop(asyncio.new_event_loop())
+
 
 app = FastAPI()
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=False, allow_methods=["*"], allow_headers=["*"])
@@ -38,5 +45,6 @@ app.include_router(asset_router)
 app.include_router(utils_router)
 app.include_router(dsr_router)
 app.include_router(format_router)
+
 
 handler = Mangum(app)
