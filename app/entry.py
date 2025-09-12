@@ -56,7 +56,6 @@ def fixdict(dt, key):
     return dt[key]
 
 def handler(event, context):
-    print(fixdict(event, "path"))
-    print(fixdict(event, "resource"))
-    print(fixdict(event["requestContext"], "resourcePath"))
+    print(fixdict(event, "rawPath"))
+    print(fixdict(event["requestContext"]["http"], "path"))
     return mangumHandler(event, context)
