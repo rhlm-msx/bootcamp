@@ -9,6 +9,7 @@ venv_*/
 *.pem
 .env
 .env*
+sum
 
 
 # Byte-compiled / optimized / DLL files
