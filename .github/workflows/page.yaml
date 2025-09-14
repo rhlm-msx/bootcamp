@@ -2,8 +2,10 @@ on:
   push:
     branches:
       - main
-name: Deploy
-uses: peaceiris/actions-gh-pages@v4
-with:
-  github_token: ${{ secrets.GITHUB_TOKEN }}
-  publish_dir: ./static
+jobs:
+  steps:
+    name: Deploy
+    uses: peaceiris/actions-gh-pages@v4
+    with:
+      github_token: ${{ secrets.GITHUB_TOKEN }}
+      publish_dir: ./static
