@@ -35,11 +35,7 @@ async def validationError(req, excp):
         "msg": "error"
         }, status_code=500)
 
-@app.get("/")
-async def redirect_to_app():
-    return RedirectResponse(url="/app")
 
-app.mount("/app", StaticFiles(directory="static", html=True), name="app")
 app.include_router(inv_router)
 app.include_router(asset_router)
 app.include_router(utils_router)
@@ -56,6 +52,4 @@ def fixdict(dt, key):
     return dt[key]
 
 def handler(event, context):
-    print(fixdict(event, "rawPath"))
-    print(fixdict(event["requestContext"]["http"], "path"))
     return mangumHandler(event, context)
