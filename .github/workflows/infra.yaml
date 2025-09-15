@@ -28,9 +28,8 @@ jobs:
           terraform init
           terraform apply -target aws_ecr_repository.lambda_ecr --auto-approve
           ECR_URL=$(terraform output -raw ecr_url)
-
-          cd ..
           aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_URL
+          cd ..
           docker build -t lambda_docker:latest .
           docker tag lambda_docker:latest $(ECR_URL):latest
           docker push $(ECR_URL):latest
