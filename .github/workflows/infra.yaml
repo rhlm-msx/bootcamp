@@ -23,17 +23,22 @@ jobs:
         with:
           pattern: terraform.tfstate
           path: infra/
-      - run: |
+      - name: Create ECR with terraform
+        run: |
           cd infra
           terraform init
           terraform apply -target aws_ecr_repository.lambda_ecr --auto-approve
           ECR_URL=$(terraform output -raw ecr_url)
           aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_URL
+      - name: Building and Pushing Docker
+        run: |
           cd ..
           docker build -t lambda_docker:latest .
           docker tag lambda_docker:latest $ECR_URL:latest
           docker push $ECR_URL:latest
           cd infra
+      - name: Deploying Lambda
+        run: |
           terraform apply --auto-approve
           LAMBDA_URL=$(terraform out -raw function_url)
       - name: Uploading terraform artifacts
