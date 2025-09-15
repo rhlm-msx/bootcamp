@@ -3,6 +3,16 @@ on:
   push:
     branches: ["main"]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   infra:
     runs-on: ubuntu-latest
@@ -21,7 +31,7 @@ jobs:
       - name: Downloading terraform state files if any
         uses: actions/download-artifact@v5
         with:
-          pattern: terraform.tfstate
+          name: terraform.tfstate
           path: infra/
       - name: Create ECR with terraform
         run: |
@@ -45,3 +55,38 @@ jobs:
         with:
           name: terraform.tfstate
           path: infra/terraform.tfstate*
+
+  deploy:
+    needs: infra
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Mounting terraform files
+        uses: actions/download-artifact@v5
+        with:
+          name: terraform.tfstate
+          path: infra/
+
+      - name: Setting up terraform
+        uses: hashicorp/setup-terraform@v3
+        run: |
+          cd infra
+          LAMBDA_URL=$(terraform out -raw function_url)
+          cd ../static
+          lambda_url=$LAMBDA_URL lambda_temp="__LAMBDA_URL__" ../update_all.sh
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './static'
+          
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
