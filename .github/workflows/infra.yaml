@@ -43,6 +43,9 @@ jobs:
           aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_URL
       - name: Building and Pushing Docker
         run: |
+          cd infra
+          ECR_URL=$(terraform output -raw ecr_url)
+          cd ..
           docker build -t lambda_docker:latest .
           docker tag lambda_docker:latest $ECR_URL:latest
           docker push $ECR_URL:latest
