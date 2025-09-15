@@ -33,6 +33,7 @@ jobs:
         with:
           name: terraform.tfstate
           path: infra/
+        continue-on-error: true
       - name: Create ECR with terraform
         run: |
           cd infra
