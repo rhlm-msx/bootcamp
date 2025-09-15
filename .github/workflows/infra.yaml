@@ -88,6 +88,7 @@ jobs:
       - name: Patching up file with Lambda URL
         run: |
           cd infra
+          terraform init
           LAMBDA_URL=$(terraform output -raw function_url)
           cd ../static
           lambda_url=$LAMBDA_URL lambda_temp="__LAMBDA_URL__" ../update_all.sh
