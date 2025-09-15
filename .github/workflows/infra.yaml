@@ -7,16 +7,28 @@ jobs:
   infra:
     runs-on: ubuntu-latest
     env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      REGION: "ap-south-1"
-      AWS_REGION: "ap-south-1"
     steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v5.0.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setting up terraform
         uses: hashicorp/setup-terraform@v3
       - run: |
+          find app -type f -exec md5sum {} \; | sort -k 2 | md5sum - > sum
           cd infra
           terraform init
           terraform apply --auto-approve
+          ECR_URL=$(terraform output -raw ecr_url)
+
+          LAMBDA_URL=$(terraform out -raw function_url)
+          cd ..
+          aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_URL
+	docker build -t lambda_docker:latest .
+	docker tag lambda_docker:latest $(ECR_URL):latest
+	docker push $(ECR_URL):latest
