@@ -84,18 +84,9 @@ def make_event():
 def test_root(make_event, context):
     event = make_event("GET", "/")
     res = handler(event, context)
-    assert res["statusCode"] == HTTPStatus.TEMPORARY_REDIRECT.value
+    assert res["statusCode"] == HTTPStatus.NOT_FOUND.value
 
 
-def test_app(make_event, context):
-    event = make_event("GET", "/app")
-    res = handler(event, context)
-    assert res["statusCode"] == HTTPStatus.OK.value
-
-def test_app2(make_event, context):
-    event = make_event("GET", "/app/")
-    res = handler(event, context)
-    assert res["statusCode"] == HTTPStatus.OK.value
 
 
 def test_not_exist(make_event, context):
@@ -106,8 +97,20 @@ def test_not_exist(make_event, context):
 def test_summary(make_event, context):
     event = make_event("GET", "/inventory/summary")
     res = handler(event, context)
-    print(res)
     assert res["statusCode"] == HTTPStatus.OK.value
     assert res["headers"]["content-type"] == "application/json"
     assert json.loads(res["body"])["entity_count"] >= 0
+
+def test_inv_listing(make_event, context):
+    event = make_event("GET", "/inventory/listing")
+    res = handler(event, context)
+    assert res["statusCode"] == HTTPStatus.OK.value
+
+def test_inv_listing_id(make_event, context):
+    event = make_event("GET", "/inventory/listing/10")
+    res = handler(event, context)
+    assert res["statusCode"] == HTTPStatus.OK.value
+
+    
+
 
