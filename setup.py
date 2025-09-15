@@ -1,5 +1,6 @@
 #!/bin/python
 
+import logging
 import json
 import os
 import boto3
@@ -9,8 +10,16 @@ from tqdm import tqdm
 
 
 
-bucketname = "terraform-20250911100819230800000001"
-s3 = boto3.resource("s3", endpoint_url=None)
+bucketname = os.environ.get("BUCKET_NAME", None)
+endpoint_url = os.environ.get("AWS_ENDPOINT", None)
+if bucketname == None:
+    logging.error(f"BUCKET_NAME ENV not set")
+    exit(-1)
+if endpoint_url == None:
+    logging.info("Connecting to Localstack")
+else:
+    logging.info("Connecting to AWS Servers")
+s3 = boto3.resource("s3", endpoint_url=endpoint_url)
 cli = s3.Bucket(bucketname)
 
 logs = {}

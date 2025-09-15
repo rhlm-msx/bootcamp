@@ -1,4 +1,4 @@
-let lambda_url = "__LAMBDA_URL__"
+let lambda_url = "http://localhost:8000"
 let root = document.querySelector("#inventory")
 
 let entity_cards = []
@@ -25,7 +25,7 @@ card.innerHTML = `
     <div class="fw-bolder card-header text-bg-danger text-center" style="background-color: ${col} !important">
     ${obj.status}
     </div>
-    <img class="card-img-top w-100 justify-content-center align-items-center d-flex" src="/assets/image/${obj.id}">
+    <img class="card-img-top w-100 justify-content-center align-items-center d-flex" src="${lambda_url}/assets/image/${obj.id}">
     <div class="card-body">
         <h4 class="card-title lh-1">
         ${obj.name}

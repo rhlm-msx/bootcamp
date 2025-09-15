@@ -1,4 +1,4 @@
-let lambda_url = "__LAMBDA_URL__"
+let lambda_url = "http://localhost:8000"
 cards_data = [{
     title : "Inventory",
     subtitle: "A Walmart Repo",
@@ -10,7 +10,7 @@ cards_data = [{
         "Search"
     ],
     callback : ()=>{
-        window.location.href = "/app/products"
+        window.location.href = "products"
     }
 },{
     title : "Document Generator",
@@ -19,7 +19,7 @@ cards_data = [{
         "Data Format"
     ],
     callback : (e)=>{
-        window.location.href = "/app/dsr"
+        window.location.href = "dsr"
     }
 }, {
     title : "Look and Feel",
@@ -28,7 +28,7 @@ cards_data = [{
         "Data Format"
     ],
     callback : ()=>{
-        window.location.href = "/app/format"
+        window.location.href = "format"
     }
 }]
 

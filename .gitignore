@@ -9,6 +9,7 @@ venv_*/
 *.pem
 .env
 .env*
+*_logs
 sum
 
 

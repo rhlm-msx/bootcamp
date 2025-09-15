@@ -4,7 +4,7 @@ Download file from S3.
 
 
 '''
-from backend.creds import Creds
+from backend import env
 import boto3
 from botocore.exceptions import ClientError
 import logging
@@ -16,8 +16,8 @@ class Assets:
     def __init__(self, bucketname: str):
         self.bucketname = bucketname
         self.downloaded_files = set({})
-        logger.info("Connecting to s3://{bucketname}.")
-        self.s3_client = boto3.resource("s3", endpoint_url=Creds.ENDPOINT)
+        logger.info(f"Connecting to s3://{bucketname}.")
+        self.s3_client = boto3.resource("s3", endpoint_url=env.ENDPOINT)
         self.s3b = self.s3_client.Bucket(bucketname)
 
     def fetchContent(self, key):

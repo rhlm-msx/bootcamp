@@ -1,3 +1,4 @@
+let lambda_url = "http://localhost:8000"
 let code = `
 <page>
         <text value="title"/>
@@ -13,3 +14,4 @@ let code = `
 
 
 document.getElementById("xml_code").innerText = code
+document.querySelector("iframe").src = `${lambda_url}/format/output`

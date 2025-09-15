@@ -1,8 +1,12 @@
 import os
 import sys
-import asyncio
+import logging
 
-os.environ["HOME"] = os.environ.get("HOME", "/home")
+os.environ["HOME"] = os.environ.get("HOME", "/home") #for pywal
+
+logging.basicConfig(level=logging.INFO)
+
+
 
 from fastapi import FastAPI, Response
 from fastapi.responses import PlainTextResponse, JSONResponse, RedirectResponse
@@ -19,11 +23,6 @@ from backend.dsr_api import dsr_router
 from backend.format_api import format_router
 
 
-
-try:
-    asyncio.get_running_loop()
-except RuntimeError:
-    asyncio.set_event_loop(asyncio.new_event_loop())
 
 
 app = FastAPI()
