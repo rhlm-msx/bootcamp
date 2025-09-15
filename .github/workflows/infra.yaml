@@ -18,16 +18,27 @@ jobs:
         uses: actions/checkout@v4
       - name: Setting up terraform
         uses: hashicorp/setup-terraform@v3
+      - name: Downloading terraform state files if any
+        uses: actions/download-artifact@v5
+        with:
+          pattern: terraform.tfstate
+          path: infra/
       - run: |
-          find app -type f -exec md5sum {} \; | sort -k 2 | md5sum - > sum
           cd infra
           terraform init
-          terraform apply --auto-approve
+          terraform apply -target aws_ecr_repository.lambda_ecr --auto-approve
           ECR_URL=$(terraform output -raw ecr_url)
 
-          LAMBDA_URL=$(terraform out -raw function_url)
           cd ..
           aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_URL
           docker build -t lambda_docker:latest .
           docker tag lambda_docker:latest $(ECR_URL):latest
           docker push $(ECR_URL):latest
+          cd infra
+          terraform apply --auto-approve
+          LAMBDA_URL=$(terraform out -raw function_url)
+      - name: Uploading terraform artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform.tfstate
+          path: infra/terraform.tfstate*
