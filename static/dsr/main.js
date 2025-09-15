@@ -1,3 +1,4 @@
+let lambda_url = "__LAMBDA_URL__"
 let inp_ele = `
     <div class="input-group mb-3">
     <div class="input-group-text">
@@ -70,7 +71,7 @@ document.querySelector("#submit").addEventListener("click", e => {
         unres_chal.push(ta[i].value)
     }
     }
-    fetch("/dsr", {
+    fetch(lambda_url + "/dsr", {
     method: "POST",
     headers: {
         'Content-Type': 'application/json'

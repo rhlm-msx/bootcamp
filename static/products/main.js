@@ -1,3 +1,4 @@
+let lambda_url = "__LAMBDA_URL__"
 let root = document.querySelector("#inventory")
 
 let entity_cards = []
@@ -42,7 +43,7 @@ card.innerHTML = `
 `
 root.appendChild(card)
 card.querySelector("img").onload = (e)=>{
-fetch("/utils/colors/" + obj.id).then(res => {
+fetch(lambda_url + "/utils/colors/" + obj.id).then(res => {
 
    res.json().then(res => {
     let color1 = res["colors"]["color2"];
@@ -57,7 +58,7 @@ fetch("/utils/colors/" + obj.id).then(res => {
 entity_cards.push(card)
 }
 
-fetch("/inventory/listing").then(res => {
+fetch(`${lambda_url}/inventory/listing`).then(res => {
     res.json().then(res =>{
         res.forEach(data => {
             addEntity(data)
