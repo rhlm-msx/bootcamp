@@ -30,4 +30,6 @@ Todo
 
 
 
+## Resources and References
 
+- [Terraform Remote Backend](https://stackoverflow.com/questions/47913041/initial-setup-of-terraform-backend-using-terraform)
