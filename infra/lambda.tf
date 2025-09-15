@@ -5,7 +5,6 @@ resource "aws_lambda_function" "lambda" {
 	image_uri = "${aws_ecr_repository.test.repository_url}:latest"
 
 
-  source_code_hash = md5(filebase64("../sum"))
 
 	image_config {
 		command = ["entry.handler"]
