@@ -1,4 +1,4 @@
-let lambda_url = "http://localhost:8000"
+let lambda_url = "__LAMBDA_URL__"
 let code = `
 <page>
         <text value="title"/>
