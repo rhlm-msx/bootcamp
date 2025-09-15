@@ -53,7 +53,7 @@ jobs:
         run: |
           cd infra
           terraform apply --auto-approve
-          LAMBDA_URL=$(terraform out -raw function_url)
+          LAMBDA_URL=$(terraform output -raw function_url)
       - name: Uploading terraform artifacts
         uses: actions/upload-artifact@v4
         with:
