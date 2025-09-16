@@ -14,7 +14,7 @@ function not_changed {
 
 function changed {
 	echo Updating Docker Image...
-	aws ssm put-parameter --name docker_image_hash --value $sum --overwrite
+	aws ssm put-parameter --name docker_image_hash --value $sum --overwrite --type "String"
 	remote=$sum
 	docker built -t lambda_docker:$sum
 	docker tag lambda_docker:$sum $ECR_URL:$sum
