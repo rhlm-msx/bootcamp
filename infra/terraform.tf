@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "s3" {
-	bucket = "local"
+	bucket = "terraform-20250916064028048800000001"
 	key = "final.terraform.tfstate"
 	region = "ap-south-1"
   }
