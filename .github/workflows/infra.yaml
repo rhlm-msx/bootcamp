@@ -1,4 +1,4 @@
-name: Infra with Terraform
+name: Infrasture Deployment
 on:
   workflow_dispatch:
   push:
