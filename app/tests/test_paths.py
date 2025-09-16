@@ -3,7 +3,15 @@ import time
 import json
 from entry import handler
 from http import HTTPStatus
+import asyncio
 
+
+@pytest.fixture(autouse=True, scope="module")
+def fixingPytestWarning():
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        asyncio.set_event_loop(asyncio.new_event_loop())
 
 
 def get_event(method="GET", path="/", query="", body=None, content_type="", content_length=0) :
