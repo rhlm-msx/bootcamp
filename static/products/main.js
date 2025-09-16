@@ -67,7 +67,7 @@ fetch(`${lambda_url}/inventory/listing`).then(res => {
     })
 })
 
-fetch(`http://localhost:8000/inventory/summary`).then(res => {
+fetch(`${lambda_url}/inventory/summary`).then(res => {
     res.json().then(res => {
         counter.classList.remove("text-bg-warning")
         counter.classList.add("text-bg-danger")
