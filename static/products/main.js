@@ -1,5 +1,6 @@
 let lambda_url = "__LAMBDA_URL__"
 let root = document.querySelector("#inventory")
+let counter = document.querySelector("#catalog-count")
 
 let entity_cards = []
 let cat_prod = {
@@ -66,3 +67,10 @@ fetch(`${lambda_url}/inventory/listing`).then(res => {
     })
 })
 
+fetch(`http://localhost:8000/inventory/summary`).then(res => {
+    res.json().then(res => {
+        counter.classList.remove("text-bg-warning")
+        counter.classList.add("text-bg-danger")
+        counter.innerHTML = res.entity_count
+    })
+})

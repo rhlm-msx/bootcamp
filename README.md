@@ -2,6 +2,8 @@
 
 [![Infrastructure](https://github.com/rhlm-msx/bootcamp/actions/workflows/infra.yaml/badge.svg)](https://github.com/rhlm-msx/bootcamp/actions/workflows/infra.yaml)
 
+- [Explore the App](https://rhlm-msx.github.io/bootcamp/)
+
 - [x] Setup Github Workflow (with the help of github market place).
 - [ ] Github Pages.
 
