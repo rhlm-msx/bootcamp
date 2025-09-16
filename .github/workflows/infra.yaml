@@ -39,9 +39,8 @@ jobs:
       - name: Building and Pushing Docker
         run: |
           cd infra
-          ECR_URL=$(terraform output -raw ecr_url)
           cd ..
-          bash build.sh
+          ECR_URL=$(terraform output -raw ecr_url) bash build.sh
       - name: Deploying Lambda
         run: |
           cd infra
