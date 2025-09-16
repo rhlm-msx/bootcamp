@@ -2,7 +2,7 @@ import os
 import sys
 import logging
 
-os.environ["HOME"] = os.environ.get("HOME", "/home") #for pywal
+os.environ["HOME"] = os.environ.get("HOME", "/home") #for pywal 
 
 logging.basicConfig(level=logging.INFO)
 

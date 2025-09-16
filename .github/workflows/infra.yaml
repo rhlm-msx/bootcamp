@@ -40,10 +40,7 @@ jobs:
         run: |
           cd infra
           ECR_URL=$(terraform output -raw ecr_url)
-          cd ..
-          docker build -t lambda_docker:latest .
-          docker tag lambda_docker:latest $ECR_URL:latest
-          docker push $ECR_URL:latest
+          bash build.sh
       - name: Deploying Lambda
         run: |
           cd infra
