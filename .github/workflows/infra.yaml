@@ -1,5 +1,6 @@
 name: Infra with Terraform
 on:
+  workflow_dispatch:
   push:
     branches: ["main"]
 
@@ -28,12 +29,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Setting up terraform
         uses: hashicorp/setup-terraform@v3
-      - name: Downloading terraform state files if any
-        uses: actions/download-artifact@v5
-        with:
-          name: terraform.tfstate
-          path: infra/
-        continue-on-error: true
       - name: Create ECR with terraform
         run: |
           cd infra
@@ -54,11 +49,6 @@ jobs:
           cd infra
           terraform apply --auto-approve
           LAMBDA_URL=$(terraform output -raw function_url)
-      - name: Uploading terraform artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: terraform.tfstate
-          path: infra/terraform.tfstate*
 
   deploy:
     needs: infra

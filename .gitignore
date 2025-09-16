@@ -5,7 +5,7 @@ depend*/
 venv_*/
 *.backup
 *.pub
-*.tfstate
+*.tfstate*
 *.pem
 .env
 .env*
