@@ -40,6 +40,7 @@ jobs:
         run: |
           cd infra
           ECR_URL=$(terraform output -raw ecr_url)
+          cd ..
           bash build.sh
       - name: Deploying Lambda
         run: |
