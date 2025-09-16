@@ -1,5 +1,8 @@
 ## Mindstix Bootcamp 2025
 
+
+[![Infrastructure](https://github.com/rhlm-msx/bootcamp/actions/workflows/infra.yaml/badge.svg)](https://github.com/rhlm-msx/bootcamp/actions/workflows/infra.yaml)
+
 - [x] Setup Github Workflow (with the help of github market place).
 - [ ] Github Pages.
 
