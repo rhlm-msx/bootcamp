@@ -22,3 +22,6 @@ jobs:
           cd infra
           terraform init
           terraform destroy --auto-approve
+      - name: Removing checksum of docker
+        run: |
+          bash build.sh destroy

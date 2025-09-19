@@ -24,5 +24,16 @@ function changed {
 	docker push $ECR_URL:latest
 }
 
-[ $sum != $remote ] && changed || not_changed
 
+
+case "$1" in
+ destroy)
+	 echo "Deleting the docker checksum"
+	 del
+	 ;;
+   *)
+	echo "Checking Docker Checksum"
+	[ $sum != $remote ] && changed || not_changed;
+    ;;
+
+esac
