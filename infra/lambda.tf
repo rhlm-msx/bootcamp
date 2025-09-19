@@ -1,4 +1,5 @@
 resource "aws_lambda_function" "lambda" {
+	depends_on = [ aws_s3_bucket.assets, aws_ecr_repository.lambda_ecr ]
 	function_name = "lambda"
 	role = aws_iam_role.lambda_role.arn
 	package_type = "Image"
@@ -13,7 +14,7 @@ resource "aws_lambda_function" "lambda" {
 	environment {
 		variables = {
 			ENV = "dev"
-			BUCKET_NAME = "locals3"
+			BUCKET_NAME = aws_s3_bucket.assets.bucket
 		}
 	}
 

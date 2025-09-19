@@ -5,7 +5,9 @@
 - [Explore the App](https://rhlm-msx.github.io/bootcamp/)
 
 - [x] Setup Github Workflow (with the help of github market place).
-- [ ] Github Pages.
+- [x] Github Pages.
+- [ ] S3 Bucket AWS
+- [ ] Empty ECR on Destroy
 
 
 Changing Approach
