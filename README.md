@@ -4,6 +4,8 @@
 
 - [Explore the App](https://rhlm-msx.github.io/bootcamp/)
 
+*Disabled Workflows for now*
+
 
 ## The Architecture
 
@@ -91,6 +93,24 @@ classDiagram
     Module: Route [String, Path]
     Module: Description [String, Markdown]
     Module: Icon [String, Path]
+```
+
+
+
+##  The Database
+
+```mermaid
+
+flowchart TD
+
+mains[Main:Schema]
+
+maint([Main:Table])
+
+mains --> maint
+
+
+
 ```
 
 
