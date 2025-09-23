@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:16
+    container_name: db
+    environment:
+      POSTGRES_USER: mind
+      POSTGRES_PASSWORD: mind
+      POSTGRES_DB: mainApp
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/pgsql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: mind@mind.coom
+      PGADMIN_DEFAULT_PASSWORD: mind
+    ports:
+      - "9085:80"
+    volumes:
+      - pgadmin_vol:/home
+
+volumes:
+  dbdata:
+  pgadmin_vol:
+

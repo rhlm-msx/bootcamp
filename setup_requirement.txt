@@ -1,3 +1,0 @@
-localstack
-awscli-local
-terraform-local
