@@ -1,38 +1,5 @@
 let lambda_url = "__LAMBDA_URL__"
-cards_data = [{
-    title : "Inventory",
-    subtitle: "A Walmart Repo",
-    feats : [
-        "RestAPI",
-        "AWS S3 Bucket",
-        "AWS Lambda",
-        "Databases",
-        "Search"
-    ],
-    callback : ()=>{
-        window.location.href = "products"
-    }
-},{
-    title : "Document Generator",
-    subtitle: "PDF",
-    feats : [
-        "Data Format"
-    ],
-    callback : (e)=>{
-        window.location.href = "dsr"
-    }
-}, {
-    title : "Look and Feel",
-    subtitle: "config with JSON,YAML and XML",
-    feats : [
-        "Data Format"
-    ],
-    callback : ()=>{
-        window.location.href = "format"
-    }
-}]
-
-
+cards_data = []
 let root = document.querySelector("#root")
 let cards = document.createElement("div")
 root.appendChild(cards)
@@ -80,7 +47,7 @@ function addCard(data){
 }
 
 cards_data.forEach(e => {
-    addCard(e)
+    //addCard(e)
 });
 
 

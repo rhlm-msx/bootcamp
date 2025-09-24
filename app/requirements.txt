@@ -1,5 +1,0 @@
-fastapi[standard]
-mangum
-boto3
-pywal
-pandas
