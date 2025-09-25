@@ -1,5 +1,4 @@
-let lambda_url = "__LAMBDA_URL__"
-cards_data = []
+let lambda_url = "localhost:8000"
 let root = document.querySelector("#root")
 let cards = document.createElement("div")
 root.appendChild(cards)
@@ -22,6 +21,7 @@ function addCard(data){
     title = data.title
     subtitle = data.subtitle
     feats = data.feats
+    link = data.link
 
 
     let u = (fts) => {
@@ -38,16 +38,25 @@ function addCard(data){
                 <span class="badge text-bg-secondary mb-2" style="font-size: 10px">${subtitle}</span>
                 <div class="list-group mb-3">
                 ${u(feats)}
-                </div> 
-                <button id="exp_${id}" class="card-link btn text-bg-warning">Explore</button> 
+                </div>
+                <a href="${link}" class="card-link btn text-bg-warning">Explore</a> 
                 </div> 
             </div> `
     cards.appendChild(div)
-    div.querySelector(`#exp_${id}`).onclick = data.callback
 }
 
-cards_data.forEach(e => {
-    //addCard(e)
-});
-
+fetch("http://localhost:8000/main/modules").then(res => {
+    if (res.ok) {
+        res.json().then(res => {
+            res.forEach(element => {
+                addCard({
+                    "title": element["name"],
+                    "subtitle": element["desc"],
+                    "feats": element["tags"],
+                    "link": element["route"]
+                })
+            });
+        })
+    }
+})
 
